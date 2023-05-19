@@ -12,6 +12,8 @@ Features will be included:
 2. Sign up/sign in pokemon trainers (should have)
 3. Battleup (nice to have)
 
+Due to the small scope of this product, I will just host both frontend & backend code in a same repository, along with 2 corresponding branch prefixes: `app` & `api`, alternatively.
+    - For example: `app/feat/pokemon-search`, `api/feat/sign-up`
 
 Some references I will follow
 - https://www.sitepoint.com/getting-started-with-react-native/ 
