@@ -12,7 +12,7 @@ import {
 
 import axios from 'axios';
 import pokemon from 'pokemon';
-import Pokemon from './components/pokemon.js';
+import Pokemon from '../pokemon.js';
 
 
 const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
