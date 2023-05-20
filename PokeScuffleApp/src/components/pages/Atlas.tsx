@@ -11,28 +11,38 @@ import {
 } from 'react-native';
 
 import axios from 'axios';
-import pokemon from 'pokemon';
-import Pokemon from '../pokemon.js';
+import pokemonUtils from 'pokemon';
+import {Pokemon} from '../../types/Pokemon'
+import PokemonView from '../molecules/PokemonView';
 
 
 const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
 
-export default class Main extends Component {
-  constructor(props) {
+interface State {
+  isLoading: boolean;
+  searchInput: string;
+  pokemonInst: Pokemon;
+}
+
+export default class Atlas extends Component<{}, State> {
+  constructor(props: {}) {
     super(props);
 
     this.state = {
       isLoading: false, // decides whether to show the activity indicator or not
       searchInput: "", // the currently input text
-      name: "", // Pokémon name
-      pic: "", // Pokémon image URL
-      types: [], // Pokémon types array
-      desc: "", // Pokémon description
+      pokemonInst: {
+        id: 0,
+        name: "",
+        pic: "",
+        desc: "",
+        types: [],
+      }
     };
   }
 
   render() {
-    const { name, pic, types, desc, searchInput, isLoading } = this.state; // extract the Pokémon data from the state
+    const { searchInput, isLoading, pokemonInst } = this.state; // extract the Pokémon data from the state
 
     return (
       <SafeAreaView style={styles.wrapper}>
@@ -59,7 +69,7 @@ export default class Main extends Component {
             {isLoading && <ActivityIndicator size="large" color="#0064e1" />}
 
             {!isLoading && (
-              <Pokemon name={name} pic={pic} types={types} desc={desc} />
+              <PokemonView {...pokemonInst} />
             )}
           </View>
         </View>
@@ -69,7 +79,7 @@ export default class Main extends Component {
 
   searchPokemon = async () => {
     try {
-      const pokemonID = pokemon.getId(this.state.searchInput); // check if the entered Pokémon name is valid
+      const pokemonID = pokemonUtils.getId(this.state.searchInput); // check if the entered Pokémon name is valid
       this.setState({
         isLoading: true, // show the loader while request is being performed
       });

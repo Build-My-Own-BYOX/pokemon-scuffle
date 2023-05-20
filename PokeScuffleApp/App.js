@@ -1,7 +1,7 @@
-import Main from './src/components/pages/atlas';
+import Atlas from './src/components/pages/Atlas';
 
 export default function App() {
   return (
-    <Main />
+    <Atlas />
   );
 }
