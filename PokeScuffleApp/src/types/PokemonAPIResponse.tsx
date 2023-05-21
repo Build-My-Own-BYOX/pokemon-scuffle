@@ -1,6 +1,7 @@
 
 // GET /pokemon/{param1}/
-// https://pokeapi.api-docs.io/v2.0/pokemon/cGhCjX5rx9jc4Y4vh
+// doc: https://pokeapi.api-docs.io/v2.0/pokemon/cGhCjX5rx9jc4Y4vh
+// e.g.: https://pokeapi.co/api/v2/pokemon/pikachu
 export type PokemonDetailResponse = {
     id: number
     name: string
@@ -19,6 +20,9 @@ export type PokemonTypeBriefResponse = {
     }
 }
 
+// GET /pokemon-species/{param1}/
+// doc: https://pokeapi.api-docs.io/v2.0/pokemon/hmdqEKsagkj6Pu5ct
+// e.g.: https://pokeapi.co/api/v2/pokemon-species/25/
 export type PokemonSpecieDetailResponse = {
     flavor_text_entries: [
         {

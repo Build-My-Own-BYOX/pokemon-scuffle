@@ -9,6 +9,7 @@ import {
   PokemonSpecieDetailResponse,
   PokemonTypeBriefResponse,
 } from "../../types/PokemonAPIResponse";
+import { getPokemonDetail, getPokemonSpecieDetail } from "../../services/PokeAPI";
 
 const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
 
@@ -56,26 +57,32 @@ class SearchPokemon extends Component<SearchPokemonProps, State> {
       // start loading
       this.props.setCallerLoadingStatus(true);
 
-      const { data: pokemonDetail } = await axios.get<PokemonDetailResponse>(
-        `${POKE_API_BASE_URL}/pokemon/${pokemonID}`
-      );
-      const { data: pokemonSpecieDetail } =
-        await axios.get<PokemonSpecieDetailResponse>(
-          `${POKE_API_BASE_URL}/pokemon-species/${pokemonID}`
-        );
+      // const { data: pokemonDetail } = await axios.get<PokemonDetailResponse>(
+      //   `${POKE_API_BASE_URL}/pokemon/${pokemonID}`
+      // );
 
-      // load done
-      this.props.setCallerLoadingStatus(false);
+      const pokemonDetail = await getPokemonDetail(pokemonID)
+      if (!pokemonDetail) {
+        throw new Error("retrieved pokemon is null")
+      }
+
+      const pokemonSpeciesDetail = await getPokemonSpecieDetail(pokemonID)
+      if (!pokemonSpeciesDetail) {
+        throw new Error("retrieved pokemon species is null")
+      }
 
       this.props.setCallerPokemonInst({
         id: pokemonID,
         name: pokemonDetail.name,
         pic: pokemonDetail.sprites.front_default,
         types: this.mapAPITypesToPokemonTypes(pokemonDetail.types),
-        desc: this.getDescription(pokemonSpecieDetail.flavor_text_entries),
+        desc: this.getDescription(pokemonSpeciesDetail.flavor_text_entries),
       });
     } catch (err) {
       Alert.alert("Error", "Pokémon not found");
+    } finally {
+      // load done
+      this.props.setCallerLoadingStatus(false);
     }
   };
 
