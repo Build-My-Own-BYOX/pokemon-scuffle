@@ -13,7 +13,7 @@ const PokemonView: React.FC<Pokemon> = (pokemon) => {
   return (
     <View style={styles.mainDetails}>
       <Image source={{ uri: pokemon.pic }} style={styles.image} resizeMode="contain" />
-      <Text style={styles.mainText}>{pokemon.id}</Text>
+      
       <Text style={styles.mainText}>{pokemon.name}</Text>
 
       <FlatList
