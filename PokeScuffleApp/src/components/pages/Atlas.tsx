@@ -8,13 +8,12 @@ import {
   Alert,
   StyleSheet,
   ActivityIndicator,
-} from 'react-native';
+} from "react-native";
 
-import axios from 'axios';
-import pokemonUtils from 'pokemon';
-import {Pokemon} from '../../types/Pokemon'
-import PokemonView from '../molecules/PokemonView';
-
+import axios from "axios";
+import pokemonUtils from "pokemon";
+import { Pokemon, PokemonType } from "../../types/Pokemon";
+import PokemonView from "../molecules/PokemonView";
 
 const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
 
@@ -37,7 +36,7 @@ export default class Atlas extends Component<{}, State> {
         pic: "",
         desc: "",
         types: [],
-      }
+      },
     };
   }
 
@@ -68,9 +67,7 @@ export default class Atlas extends Component<{}, State> {
           <View style={styles.mainContainer}>
             {isLoading && <ActivityIndicator size="large" color="#0064e1" />}
 
-            {!isLoading && (
-              <PokemonView {...pokemonInst} />
-            )}
+            {!isLoading && <PokemonView {...pokemonInst} />}
           </View>
         </View>
       </SafeAreaView>
@@ -93,26 +90,74 @@ export default class Atlas extends Component<{}, State> {
       const { name, sprites, types } = pokemonData;
       const { flavor_text_entries } = pokemonSpecieData;
 
-      this.setState({
-        name,
-        pic: sprites.front_default,
-        types: this.getTypes(types),
-        desc: this.getDescription(flavor_text_entries),
+      this.setState((prevState) => ({
+        pokemonInst: {
+          ...prevState.pokemonInst, // Keep the existing attributes
+          id: pokemonID,
+          name: name,
+          pic: sprites.front_default,
+          types: this.mapAPITypesToPokemonTypes(types),
+          desc: this.getDescription(flavor_text_entries),
+        },
         isLoading: false, // hide loader
-      });
+      }));
     } catch (err) {
-      Alert.alert('Error', 'Pokémon not found');
+      Alert.alert("Error", "Pokémon not found");
     }
   };
 
-  getTypes = (types) =>
-  types.map(({ slot, type }) => ({
-    id: slot,
-    name: type.name,
-  }));
-
   getDescription = (entries) =>
-    entries.find((item) => item.language.name === 'en').flavor_text;
+    entries.find((item) => item.language.name === "en").flavor_text;
+
+  /**
+   * Maps API types to Pokémon type slots.
+   * @param apiTypes - The array of API types to be mapped.
+   * @returns An array of Pokémon type slots.
+   * 
+   * 
+   * example of apiTypes
+   * [
+   *  {
+   *    "slot": 1,
+   *    "type": {
+   *      "name": "water",
+   *      "url": "https://pokeapi.co/api/v2/type/11/"
+   *    }
+   *  },
+   *  {
+   *    "slot": 2,
+   *    "type": {
+   *      "name": "electric",
+   *      "url": "https://pokeapi.co/api/v2/type/13/"
+   *    }
+   *  }
+   * ]
+   * 
+  */
+  mapAPITypesToPokemonTypes = (apiTypes: any[]): PokemonType[] => {
+    return apiTypes.map((item) => {
+      if (
+        !item ||
+        typeof item.slot !== "number" ||
+        !item.type ||
+        typeof item.type.name !== "string" ||
+        typeof item.type.url !== "string"
+      ) {
+        return {
+          id: 0,
+          name: "",
+          url: "",
+        };
+      }
+
+      const typeId = item.type.url.split("/").slice(-2, -1)[0];
+      return {
+        id: typeId,
+        name: item.type.name,
+        url: item.type.url,
+      };
+    });
+  };
 }
 
 const styles = StyleSheet.create({
@@ -122,11 +167,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: "#F5FCFF",
   },
   headContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 100,
   },
   textInputContainer: {
@@ -141,9 +186,9 @@ const styles = StyleSheet.create({
   textInput: {
     height: 35,
     marginBottom: 10,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderWidth: 1,
-    backgroundColor: '#eaeaea',
+    backgroundColor: "#eaeaea",
     padding: 5,
   },
 });

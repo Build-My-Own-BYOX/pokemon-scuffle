@@ -2,20 +2,18 @@ import React from 'react';
 import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
 import {Pokemon} from '../../types/Pokemon'
 
-const PokemonView: React.FC<Pokemon>  = (pokemon) => {
-
+const PokemonView: React.FC<Pokemon> = (pokemon) => {
   if (!pokemon.name) {
-    return (
-      <View style={styles.mainDetails}>
-        <Text style={styles.mainText}>Not found</Text>
-      </View>
-    );
-    // return null;
+    // return (
+    //   <Text style={styles.mainText}>Not Found</Text>
+    // );
+    return null;
   }
 
   return (
     <View style={styles.mainDetails}>
       <Image source={{ uri: pokemon.pic }} style={styles.image} resizeMode="contain" />
+      <Text style={styles.mainText}>{pokemon.id}</Text>
       <Text style={styles.mainText}>{pokemon.name}</Text>
 
       <FlatList
