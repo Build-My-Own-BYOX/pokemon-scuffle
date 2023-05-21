@@ -54,10 +54,6 @@ class SearchPokemon extends Component<SearchPokemonProps, State> {
       // start loading
       this.props.setCallerLoadingStatus(true);
 
-      // const { data: pokemonDetail } = await axios.get<PokemonDetailResponse>(
-      //   `${POKE_API_BASE_URL}/pokemon/${pokemonID}`
-      // );
-
       const pokemonDetail = await getPokemonDetail(pokemonID)
       if (!pokemonDetail) {
         throw new Error("retrieved pokemon is null")
