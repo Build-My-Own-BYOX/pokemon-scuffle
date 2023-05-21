@@ -14,6 +14,7 @@ import axios from "axios";
 import pokemonUtils from "pokemon";
 import { Pokemon, PokemonType } from "../../types/Pokemon";
 import PokemonView from "../molecules/PokemonView";
+import { PokemonDetailResponse, PokemonSpecieDetailResponse, PokemonTypeBriefResponse } from "../../types/PokemonAPIResponse";
 
 const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
 
@@ -80,24 +81,20 @@ export default class Atlas extends Component<{}, State> {
       this.setState({
         isLoading: true, // show the loader while request is being performed
       });
-      const { data: pokemonData } = await axios.get(
+      const { data: pokemonDetail} = await axios.get<PokemonDetailResponse>(
         `${POKE_API_BASE_URL}/pokemon/${pokemonID}`
       );
-      const { data: pokemonSpecieData } = await axios.get(
+      const { data: pokemonSpecieDetail } = await axios.get<PokemonSpecieDetailResponse>(
         `${POKE_API_BASE_URL}/pokemon-species/${pokemonID}`
       );
-
-      const { name, sprites, types } = pokemonData;
-      const { flavor_text_entries } = pokemonSpecieData;
-
       this.setState((prevState) => ({
         pokemonInst: {
           ...prevState.pokemonInst, // Keep the existing attributes
           id: pokemonID,
-          name: name,
-          pic: sprites.front_default,
-          types: this.mapAPITypesToPokemonTypes(types),
-          desc: this.getDescription(flavor_text_entries),
+          name: pokemonDetail.name,
+          pic: pokemonDetail.sprites.front_default,
+          types: this.mapAPITypesToPokemonTypes(pokemonDetail.types),
+          desc: this.getDescription(pokemonSpecieDetail.flavor_text_entries),
         },
         isLoading: false, // hide loader
       }));
@@ -111,30 +108,10 @@ export default class Atlas extends Component<{}, State> {
 
   /**
    * Maps API types to Pokémon type slots.
-   * @param apiTypes - The array of API types to be mapped.
+   * @param apiTypes - a list of brief pokemon types extracted from API response 
    * @returns An array of Pokémon type slots.
-   * 
-   * 
-   * example of apiTypes
-   * [
-   *  {
-   *    "slot": 1,
-   *    "type": {
-   *      "name": "water",
-   *      "url": "https://pokeapi.co/api/v2/type/11/"
-   *    }
-   *  },
-   *  {
-   *    "slot": 2,
-   *    "type": {
-   *      "name": "electric",
-   *      "url": "https://pokeapi.co/api/v2/type/13/"
-   *    }
-   *  }
-   * ]
-   * 
   */
-  mapAPITypesToPokemonTypes = (apiTypes: any[]): PokemonType[] => {
+  mapAPITypesToPokemonTypes = (apiTypes: PokemonTypeBriefResponse[]): PokemonType[] => {
     return apiTypes.map((item) => {
       if (
         !item ||
@@ -150,9 +127,10 @@ export default class Atlas extends Component<{}, State> {
         };
       }
 
+      // extract type id from field url
       const typeId = item.type.url.split("/").slice(-2, -1)[0];
       return {
-        id: typeId,
+        id: parseInt(typeId) ?? 0,
         name: item.type.name,
         url: item.type.url,
       };
