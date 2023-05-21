@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { View, TextInput, Button, Alert, StyleSheet } from "react-native";
 
-import axios from "axios";
 import pokemonUtils from "pokemon";
 import { Pokemon, PokemonType } from "../../types/Pokemon";
 import {
-  PokemonDetailResponse,
-  PokemonSpecieDetailResponse,
   PokemonTypeBriefResponse,
 } from "../../types/PokemonAPIResponse";
-import { getPokemonDetail, getPokemonSpecieDetail } from "../../services/PokeAPI";
+import { getPokemonDetail, getPokemonSpeciesDetail } from "../../services/PokeAPI";
 
 const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
 
@@ -66,7 +63,7 @@ class SearchPokemon extends Component<SearchPokemonProps, State> {
         throw new Error("retrieved pokemon is null")
       }
 
-      const pokemonSpeciesDetail = await getPokemonSpecieDetail(pokemonID)
+      const pokemonSpeciesDetail = await getPokemonSpeciesDetail(pokemonID)
       if (!pokemonSpeciesDetail) {
         throw new Error("retrieved pokemon species is null")
       }

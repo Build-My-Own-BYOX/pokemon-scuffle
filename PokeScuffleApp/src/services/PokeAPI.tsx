@@ -1,5 +1,5 @@
 import { POKE_API_SERVICE } from "../constants/APIs";
-import { PokemonDetailResponse, PokemonSpecieDetailResponse } from "../types/PokemonAPIResponse";
+import { PokemonDetailResponse, PokemonSpeciesDetailResponse } from "../types/PokemonAPIResponse";
 
 const getPokemonDetail = async (
   pokemonID: number
@@ -13,9 +13,9 @@ const getPokemonDetail = async (
   }
 };
 
-const getPokemonSpecieDetail = async (
+const getPokemonSpeciesDetail = async (
   pokemonID: number
-): Promise<PokemonSpecieDetailResponse | null> => {
+): Promise<PokemonSpeciesDetailResponse | null> => {
   try {
     const response = await POKE_API_SERVICE.get(`/pokemon-species/${pokemonID}`);
     return response.data;
@@ -25,4 +25,4 @@ const getPokemonSpecieDetail = async (
   }
 };
 
-export { getPokemonDetail, getPokemonSpecieDetail };
+export { getPokemonDetail, getPokemonSpeciesDetail };

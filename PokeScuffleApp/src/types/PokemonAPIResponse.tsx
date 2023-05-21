@@ -23,7 +23,7 @@ export type PokemonTypeBriefResponse = {
 // GET /pokemon-species/{param1}/
 // doc: https://pokeapi.api-docs.io/v2.0/pokemon/hmdqEKsagkj6Pu5ct
 // e.g.: https://pokeapi.co/api/v2/pokemon-species/25/
-export type PokemonSpecieDetailResponse = {
+export type PokemonSpeciesDetailResponse = {
     flavor_text_entries: [
         {
             flavor_text: string
