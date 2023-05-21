@@ -1,4 +1,4 @@
-import Atlas from './src/components/pages/Atlas';
+import Atlas from './src/components/screens/Atlas';
 
 export default function App() {
   return (

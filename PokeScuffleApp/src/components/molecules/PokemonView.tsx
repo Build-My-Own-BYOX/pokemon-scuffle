@@ -4,9 +4,6 @@ import {Pokemon} from '../../types/Pokemon'
 
 const PokemonView: React.FC<Pokemon> = (pokemon) => {
   if (!pokemon.name) {
-    // return (
-    //   <Text style={styles.mainText}>Not Found</Text>
-    // );
     return null;
   }
 
