@@ -1,20 +1,21 @@
 import React from 'react';
 import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
+import {Pokemon} from '../../types/Pokemon'
 
-// 
-const Pokemon = ({ name, pic, types, desc }) => {
-  if (!name) {
+const PokemonView: React.FC<Pokemon> = (pokemon) => {
+  if (!pokemon.name) {
     return null;
   }
 
   return (
     <View style={styles.mainDetails}>
-      <Image source={{ uri: pic }} style={styles.image} resizeMode="contain" />
-      <Text style={styles.mainText}>{name}</Text>
+      <Image source={{ uri: pokemon.pic }} style={styles.image} resizeMode="contain" />
+      
+      <Text style={styles.mainText}>{pokemon.name}</Text>
 
       <FlatList
         columnWrapperStyle={styles.types}
-        data={types}
+        data={pokemon.types}
         numColumns={2}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
@@ -25,7 +26,7 @@ const Pokemon = ({ name, pic, types, desc }) => {
       />
 
       <View style={styles.description}>
-        <Text>{desc}</Text>
+        <Text>{pokemon.desc}</Text>
       </View>
     </View>
   );
@@ -117,4 +118,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Pokemon;
+export default PokemonView;
