@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, Text } from "react-native";
 
 interface State {}
 
@@ -13,7 +13,7 @@ class PokeDetailScreen extends Component<{}, State> {
   render() {
     return (
       <SafeAreaView>
-        <h1>Hello there</h1>
+        <Text>Hello there</Text>
       </SafeAreaView>
     );
   }

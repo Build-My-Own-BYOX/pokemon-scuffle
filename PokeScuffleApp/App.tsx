@@ -1,12 +1,11 @@
-import Atlas from './src/components/screens/AtlasScreen';
-import { createStackNavigator } from '@react-navigation/stack';
-
-// Create a stack navigator
-const Stack = createStackNavigator();
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { StackNavigator } from "./src/navigations/StackNavigators";
 
 export default function App() {
   return (
-    <Atlas />
+    <NavigationContainer>
+      <StackNavigator />
+    </NavigationContainer>
   );
 }
-

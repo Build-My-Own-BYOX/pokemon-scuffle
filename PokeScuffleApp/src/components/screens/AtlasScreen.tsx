@@ -9,6 +9,7 @@ import {
 import { Pokemon } from "../../types/Pokemon";
 import PokemonView from "../molecules/PokemonView";
 import SearchPokemon from "../molecules/SearchPokemon";
+import { useNavigation } from "@react-navigation/native";
 
 interface State {
   isLoading: boolean;
