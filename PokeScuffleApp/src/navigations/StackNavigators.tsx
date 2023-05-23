@@ -6,23 +6,24 @@ import {
   PokeAtlasScreenName,
   PokeDetailScreenName,
 } from "../constants/Screens";
+import { Pokemon } from "../types/Pokemon";
 
 export type RootStackParams = {
   [PokeAtlasScreenName]: undefined;
-  [PokeDetailScreenName]: undefined;
-}
+  [PokeDetailScreenName]: { pokemonInst: Pokemon };
+};
 
 declare global {
   namespace ReactNavigation {
-      interface RootParamList extends RootStackParams { }
+    interface RootParamList extends RootStackParams {}
   }
 }
 
-const Stack = createStackNavigator<RootStackParams>();
+const RootStack = createStackNavigator<RootStackParams>();
 
 export const StackNavigator = () => {
   return (
-    <Stack.Navigator
+    <RootStack.Navigator
       screenOptions={{
         headerStyle: {
           backgroundColor: "#9AC4F8",
@@ -30,9 +31,13 @@ export const StackNavigator = () => {
         headerTintColor: "white",
         headerBackTitle: "Back",
       }}
+      initialRouteName={PokeAtlasScreenName}
     >
-      <Stack.Screen name={PokeAtlasScreenName} component={Atlas} />
-      <Stack.Screen name={PokeDetailScreenName} component={PokeDetailScreen} />
-    </Stack.Navigator>
+      <RootStack.Screen name={PokeAtlasScreenName} component={Atlas} />
+      <RootStack.Screen
+        name={PokeDetailScreenName}
+        component={PokeDetailScreen}
+      />
+    </RootStack.Navigator>
   );
 };

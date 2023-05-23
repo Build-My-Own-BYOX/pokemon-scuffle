@@ -7,9 +7,8 @@ import {
 } from "react-native";
 
 import { Pokemon } from "../../types/Pokemon";
-import PokemonView from "../molecules/PokemonView";
+import PokemonCard from "../molecules/PokemonCard";
 import SearchPokemon from "../molecules/SearchPokemon";
-import { useNavigation } from "@react-navigation/native";
 
 interface State {
   isLoading: boolean;
@@ -55,7 +54,7 @@ class Atlas extends Component<{}, State> {
           <View style={styles.mainContainer}>
             {isLoading && <ActivityIndicator size="large" color="#0064e1" />}
 
-            {!isLoading && <PokemonView {...pokemonInst} />}
+            {!isLoading && <PokemonCard {...pokemonInst} />}
           </View>
         </View>
       </SafeAreaView>

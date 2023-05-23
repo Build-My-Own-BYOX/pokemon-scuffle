@@ -5,7 +5,7 @@ import { Pokemon } from "../../types/Pokemon";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { PokeDetailScreenName } from "../../constants/Screens";
 
-const PokemonView: React.FC<Pokemon> = (pokemon) => {
+const PokemonCard: React.FC<Pokemon> = (pokemon) => {
   const { navigate } = useNavigation()
 
   if (!pokemon.name) {
@@ -16,7 +16,9 @@ const PokemonView: React.FC<Pokemon> = (pokemon) => {
     <TouchableOpacity
       activeOpacity={0.9}
       onPress={() =>
-        navigate(PokeDetailScreenName)
+        navigate(PokeDetailScreenName, {
+          pokemonInst: pokemon,
+        })
       }
     >
       <View style={styles.mainDetails}>
@@ -48,7 +50,6 @@ const PokemonView: React.FC<Pokemon> = (pokemon) => {
   );
 };
 
-//
 const styles = StyleSheet.create({
   mainDetails: {
     padding: 30,
@@ -134,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PokemonView;
+export default PokemonCard;
