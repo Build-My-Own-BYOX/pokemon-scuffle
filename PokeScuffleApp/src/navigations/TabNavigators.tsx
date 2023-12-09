@@ -3,6 +3,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import { colors } from '../constants/Colors';
 import PokeAboutTab from '../components/organisms/PokeAboutTab';
+import { PokeStatsTab } from '../components/organisms/PokeStatsTab';
+import { PokeEvolutionTab } from '../components/organisms/PokeEvolutionTab';
+import { PokeMovesTab } from '../components/organisms/PokeMovesTab';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -18,6 +21,9 @@ export const TabNavigator = () => {
       }}
     >
       <Tab.Screen name="About" component={PokeAboutTab} />
+      <Tab.Screen name="Stats" component={PokeStatsTab} />
+      <Tab.Screen name="Evolution" component={PokeEvolutionTab} />
+      <Tab.Screen name="Moves" component={PokeMovesTab} />
     </Tab.Navigator>
   )
 }

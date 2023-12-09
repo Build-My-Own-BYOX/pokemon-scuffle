@@ -3,12 +3,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Atlas from "../components/screens/AtlasScreen";
 import PokeDetailScreen from "../components/screens/PokeDetailScreen";
 import {
+  PokeDexScreenName,
   PokeAtlasScreenName,
   PokeDetailScreenName,
 } from "../constants/Screens";
 import { Pokemon } from "../types/Pokemon";
+import { PokedexScreen } from "../components/screens/PokeDexScreen";
 
 export type RootStackParams = {
+  [PokeDexScreenName]: undefined;
   [PokeAtlasScreenName]: undefined;
   [PokeDetailScreenName]: { pokemonInst: Pokemon };
 };
@@ -25,14 +28,12 @@ export const StackNavigator = () => {
   return (
     <RootStack.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: "#9AC4F8",
-        },
-        headerTintColor: "white",
-        headerBackTitle: "Back",
+        headerShown: false,
+        cardStyle: { backgroundColor: '#fff' }
       }}
-      initialRouteName={PokeAtlasScreenName}
+      initialRouteName={PokeDexScreenName}
     >
+      <RootStack.Screen name={PokeDexScreenName} component={PokedexScreen} />
       <RootStack.Screen name={PokeAtlasScreenName} component={Atlas} />
       <RootStack.Screen
         name={PokeDetailScreenName}

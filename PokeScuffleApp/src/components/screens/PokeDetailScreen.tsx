@@ -10,7 +10,7 @@ import { TabNavigator } from "../../navigations/TabNavigators";
 import PokeNotFound from "../organisms/PokeNotFound";
 import { usePokemon } from "../../services/PokeAPI";
 
-type Props = StackScreenProps<RootStackParams, "Pokemon Detail">;
+type Props = StackScreenProps<RootStackParams, typeof PokeDetailScreenName>;
 
 const PokeDetailScreen = ({ route }: Props) => {
   const { pokemonInst } = route.params;

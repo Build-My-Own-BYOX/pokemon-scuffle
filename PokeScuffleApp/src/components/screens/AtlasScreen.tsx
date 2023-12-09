@@ -27,7 +27,7 @@ class Atlas extends Component<{}, State> {
         pic: "",
         desc: "",
         types: [],
-      },
+      } as Pokemon,
     };
   }
 
